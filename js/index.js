@@ -1,13 +1,22 @@
-// TO DO
+// RANDY D'ABBRACCIO 6.12.2022
+
+// TO DO:
 // remove photos - maybe not with refresh
+// remove player turn on win
+// fix bug
+// set doc font
+// remove outside borders
+// tie is busted
+// swap out images
+// make it white on black
 
 
 // GENERAL NOTES
     // you can store box data/state in object properties and
-        // don't need to use class to store data. use object.content = ...
+        // don't need to use class to store data. use object.content = whateverdata
     // set a boolean var to undefined if you need to clear it
     // put eventlistener higher up and have it bubble up
-    // run two functions on click with onclick
+    // run two functions on click with onclick instead of eventlisteners in JS
         // IN HTML DIVS
             // run two functions on click with onclick
             // make an event listener onclick="canplaynow(topLeftBox)'anotherfunc()
@@ -16,11 +25,16 @@
     // can set array after the fact
     // you can pass in just an DOMobject and its properties will come with it
 
+    // ?? Should you use UNDEFINED as state holder???
+    // ?? Do you leave in testing code and comment it out??
+
 
 // START WITH "X" player
 
-// var of whos turn. True equals player1,X ; false = player2,O
-let whosTurn = true  // set to player1 by default
+//**************************** DEFINE VARIABLES********************************************* */
+
+// var of whos turn. True equals player1,X ; false = player2,"O". Set to player1 by default
+let whosTurn = true
 
 // var for end of game
 let gameOver = false
@@ -29,36 +43,43 @@ let gameOver = false
 // can you set a variable to null?
 let playerWinner = null
 
-// var for box state FORMAT
-// domObj.squarePlayed = true/false
-
 let turnCounter = 1
+
+const playerDisplay = document.getElementById('playerDisplay')  //init playerDislay DOM object
+playerDisplay.innerText = "It is Player 1's turn (X)"
+
+const winnerDisplay = document.getElementById('winnerMessage')
+
+
+
+// General NOTE: domObj.squarePlayed = true/false, which is NOT the type of mark
+
 
 
 //*********Create DOM objects W/ Game logic**************** */
 
 const tlbObj = document.getElementById('topLeftBox')
 
-tlbObj.squarePlayed = false // init squarePlayed to F to start
+// init var squarePlayed. Hold if a box has been played. Set to FALSE for start
+tlbObj.squarePlayed = false 
 
-    console.log("tlbObj.squarePlayed.outsd:"+tlbObj.squarePlayed)
 
-
-//********* */
 tlbObj.addEventListener('click', function(event) {
 
     // mark box with X or O
     insertXO(whosTurn,tlbObj) 
-
-
-    // check for win state
     
     tlbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+    checkIfWin()
+    checkForTie()
+    
+
     turnCounter++
 })
 
-//***
+
+//********
 
 const tmbObj = document.getElementById('topMiddleBox')
 tmbObj.squarePlayed = false // init
@@ -68,170 +89,172 @@ tmbObj.addEventListener('click', function(event) {
 
     // mark box with X or O
     insertXO(whosTurn,tmbObj) 
-
-    // check for win state
-
-    // console.log("bxPlyd?:"+hasBoxBeenPlayed(tmbObj.squarePlayed))
-    
+ 
     tmbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
     
 })
 
 
-//******
+//********
 
 const trbObj = document.getElementById('topRightBox')
 trbObj.squarePlayed = false // init
 
 trbObj.addEventListener('click', function(event) {
 
-
-    // console.log("trbObj.squarePlayed.insid:"+trbObj.squarePlayed)
-
-
     // mark box with X or O
     insertXO(whosTurn,trbObj) 
 
-
-    // check for win state
-
-    // console.log("bxPlyd?:"+hasBoxBeenPlayed(trbObj.squarePlayed))
     
     trbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
 })
+
+
+//********
 
 const mlbObj = document.getElementById('middleLeftBox')
 mlbObj.squarePlayed = false // init
 
 mlbObj.addEventListener('click', function(event) {
 
-
-
-    // console.log("mlbObj.squarePlayed.insid:"+trbObj.squarePlayed)
-
-
     // mark box with X or O
     insertXO(whosTurn,mlbObj) 
-
-
-    // check for win state
-
-    // console.log("bxPlyd?:"+hasBoxBeenPlayed(mlbObj.squarePlayed))
     
     mlbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
 })
+
+//********
 
 const mmbObj = document.getElementById('middleMiddleBox')
 mmbObj.squarePlayed = false // init
 
 mmbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
-
 
     // mark box with X or O
     insertXO(whosTurn,mmbObj) 
-
-
-    // check for win state
     
     mmbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
 
 })
+
+//********
 
 const mrbObj = document.getElementById('middleRightBox')
 mrbObj.squarePlayed = false // init
 
 mrbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
 
 
     // mark box with X or O
     insertXO(whosTurn,mrbObj) 
-
-
-    // check for win state
-    
+  
     mrbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
-
 })
+
+//********
 
 const blbObj = document.getElementById('BottomLeftBox')
 blbObj.squarePlayed = false // init
 
 blbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
-
 
     // mark box with X or O
     insertXO(whosTurn,blbObj) 
-
-
-    // check for win state
     
     blbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
 
 })
+
+//********
 
 const bmbObj = document.getElementById('BottomMiddleBox')
 bmbObj.squarePlayed = false // init
 
 bmbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
-
 
     // mark box with X or O
     insertXO(whosTurn,bmbObj) 
-
-
-    // check for win state
-    
+   
     bmbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
 
 
 
 })
+
+//********
 
 const brbObj = document.getElementById('BottomRightBox')
 brbObj.squarePlayed = false // init
 
 brbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
-
 
     // mark box with X or O
     insertXO(whosTurn,brbObj) 
-
-
-    // check for win state
     
     brbObj.squarePlayed = true // set it to true when clicked
     playerChanger(whosTurn)
+
+    checkIfWin()
+    checkForTie()
     turnCounter++
-
-
-
 })
 
+//****************DomObjects var inits */
+
+// init the mark types if X
+tmbObj.isMarkTypeX = undefined 
+trbObj.isMarkTypeX = undefined
+mlbObj.isMarkTypeX = undefined
+mmbObj.isMarkTypeX = undefined
+mrbObj.isMarkTypeX = undefined
+blbObj.isMarkTypeX = undefined
+bmbObj.isMarkTypeX = undefined
+brbObj.isMarkTypeX = undefined
+
+
+
 //****************************************************************** */
+
 
 // NOTE DONE!! function to restart game on load
     // CAN'T you just force a page reset??
@@ -254,6 +277,12 @@ const playerChanger = (whoTurnVar) => {
         whosTurn = false
     } else {
         whosTurn = true
+    }    
+    
+    if (whosTurn === true){ 
+        playerDisplay.innerText = "It is Player 1's turn (X)"
+    } else {
+        playerDisplay.innerText = "It is Player 2's turn (O)"
     }
 }
 
@@ -267,12 +296,13 @@ const insertXO = (user,elementObj) => {
     // player1 = True and "X"
     if (hasBoxBeenPlayed(elementObj) === false){  //box is not filled
         if (user === true){  // aka player 1
-        
+            elementObj.isMarkTypeX = true
             let img = document.createElement('img')
             img.src = "img/x.png"
             elementObj.appendChild(img) 
 
         } else if (hasBoxBeenPlayed(user) === false){ // aka player 2
+            elementObj.isMarkTypeX = false
             let img = document.createElement('img')
             img.src = "img/o_300x300px.png"
             elementObj.appendChild(img)  
@@ -330,17 +360,73 @@ const setAllBoxesToNotPlayed = () => {
 
 // function to check if theres a tie
 // i think if the turn = 9 and no win, then a tie
+const checkForTie = () => {
+    if (turnCounter === 9 && gameOver === true) {
+        winnerDisplay.innerText = "IT WAS A TIE!" 
+        setAllBoxesToPlayed()
+        
+    }
+}
+
 
 // method to check if theres a win
     // check if there are wins in rows
     // check what the rows are composed of
+    // !! DON"T want to check the squarePlayed state, I want the type of marking
 const checkIfWin = () => {
-}
+
+    if (
+
+        // For X Win states
+        // row wins
+        tlbObj.isMarkTypeX === true && tmbObj.isMarkTypeX === true && trbObj.isMarkTypeX === true ||
+        mlbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && mrbObj.isMarkTypeX === true ||
+        blbObj.isMarkTypeX === true && bmbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
+
+        // column wins
+        tlbObj.isMarkTypeX === true && mlbObj.isMarkTypeX === true && blbObj.isMarkTypeX === true ||
+        tmbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && bmbObj.isMarkTypeX === true ||
+        trbObj.isMarkTypeX === true && mrbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
+        
+        // x wins
+        tlbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
+        trbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && blbObj.isMarkTypeX === true
+
+    ) { winnerDisplay.innerText = "Player 1 (X) IS WINNER!!!" 
+
+        setAllBoxesToPlayed()
+        removeTurnDisplay()
+        gameOver = true
+        }
+
+    else if (
 
 
-// method to check if the game is over
-const endGameCheck = () => {
+        // For Y Win states
+        // row wins
+        tlbObj.isMarkTypeX === false && tmbObj.isMarkTypeX === false && trbObj.isMarkTypeX === false ||
+        mlbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && mrbObj.isMarkTypeX === false ||
+        blbObj.isMarkTypeX === false && bmbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
+
+        // column wins
+        tlbObj.isMarkTypeX === false && mlbObj.isMarkTypeX === false && blbObj.isMarkTypeX === false ||
+        tmbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && bmbObj.isMarkTypeX === false ||
+        trbObj.isMarkTypeX === false && mrbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
+        
+        // x wins
+        tlbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
+        trbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && blbObj.isMarkTypeX === false
+
+        
+    ) { winnerDisplay.innerText = "Player 2 (O) IS WINNER!!!" 
+
+        setAllBoxesToPlayed()
+        removeTurnDisplay()
+        gameOver = true
+        }
+    
 }
+
 
 // function to check if box is alreay set
 // INPUT: DOMobj, OUTPUT: T/F
@@ -362,6 +448,10 @@ const displayWinner = (winner) => {
     } else (displayWinner.innerText = "Game on!")
 }
 
+const removeTurnDisplay = () => {
+    playerDisplay.innerText = ""
+}
+
 
 // restart button function
 let restartButtonObj = document.getElementById('restartButton')
@@ -369,60 +459,35 @@ restartButtonObj.addEventListener('click',function() {
     restartGame()
 })
 
-/////////////////////////////// BELOW ARE NOTE functions
-
-// trying to get element identifier when clicked
-document.body.addEventListener("click",function(e) {
-    var t = e.target;
-    while(t && t.nodeName != "TAG") { // note, must be uppercase
-        t = t.parentNode;
-    }
-    if( t) {
-        alert("You clicked on #"+t.id);
-    }
-},false);
-
-
-// ***************testing below
-//callback function passed to another function
-//USEOBJEct.addEventListener('click', tehfunction)   // don't want to invoke it but pass it, so passing function on
-
-//generate.addEventListener('click', makePalette)
-
-const addColor = (event) => {
-
-    // seledt the clicked squares background color
-    const color = event.target.style.backgroundColor  //not square, but the certain thing by using event.target
-
-    // add the class of square to my new square
-    newSquare.classList.add('square')
-
-
-    // add my new square to my-palette
-    myPalette.appendChild(newSquare)
-}
-
-
 //********************************************* */
 // TESTING AREA
 const testArray = [tlbObj,tmbObj,trbObj,mlbObj,mmbObj,mrbObj,blbObj,bmbObj,brbObj]
 
-const divTestObj = document.getElementById('testButton')  // TESTING
-divTestObj.addEventListener('click', function(event) {
-   console.log("tl.square played:"+testArray[0].squarePlayed)
-   console.log("tm.square played:"+testArray[1].squarePlayed)
-   console.log("tr.square played:"+testArray[2].squarePlayed)
-   console.log("ml.square played:"+testArray[3].squarePlayed)
-   console.log("mm.square played:"+testArray[4].squarePlayed)
-   console.log("mr.square played:"+testArray[5].squarePlayed)
-   console.log("bl.square played:"+testArray[6].squarePlayed)
-   console.log("bm.square played:"+testArray[7].squarePlayed)
-   console.log("br.square played:"+testArray[7].squarePlayed)
 
-    console.log("whosTurn:"+ whosTurn)
-    console.log("turnCounter:"+turnCounter)
-})
+// TEST button output
+// const divTestObj = document.getElementById('testButton')  // TESTING
+// divTestObj.addEventListener('click', function(event) {
+//    console.log("tl.square played:"+testArray[0].squarePlayed)
+//    console.log("tm.square played:"+testArray[1].squarePlayed)
+//    console.log("tr.square played:"+testArray[2].squarePlayed)
+//    console.log("ml.square played:"+testArray[3].squarePlayed)
+//    console.log("mm.square played:"+testArray[4].squarePlayed)
+//    console.log("mr.square played:"+testArray[5].squarePlayed)
+//    console.log("bl.square played:"+testArray[6].squarePlayed)
+//    console.log("bm.square played:"+testArray[7].squarePlayed)
+//    console.log("br.square played:"+testArray[7].squarePlayed)
 
-// setTimeout(function(){ /// SLEEP through delayed funct in 
-//     markBoxAsNotPlayed (divTest)
-// },5000)
+//    console.log("tl.isMarkTypeX:"+testArray[0].isMarkTypeX)
+//    console.log("tm.isMarkTypeX:"+testArray[1].isMarkTypeX)
+//    console.log("tr.isMarkTypeX:"+testArray[2].isMarkTypeX)
+//    console.log("ml.isMarkTypeX:"+testArray[3].isMarkTypeX)
+//    console.log("mm.isMarkTypeX:"+testArray[4].isMarkTypeX)
+//    console.log("mr.isMarkTypeX:"+testArray[5].isMarkTypeX)
+//    console.log("bl.isMarkTypeX:"+testArray[6].isMarkTypeX)
+//    console.log("bm.isMarkTypeX:"+testArray[7].isMarkTypeX)
+//    console.log("br.isMarkTypeX:"+testArray[7].isMarkTypeX)
+
+//     console.log()
+//     console.log("whosTurn:"+ whosTurn)
+//     console.log("turnCounter:"+turnCounter)
+// })
