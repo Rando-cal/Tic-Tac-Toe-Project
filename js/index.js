@@ -1,4 +1,6 @@
-// TO DO playerChanger is NOT working
+// TO DO
+// remove photos - maybe not with refresh
+
 
 // GENERAL NOTES
     // you can store box data/state in object properties and
@@ -12,6 +14,7 @@
 
 
     // can set array after the fact
+    // you can pass in just an DOMobject and its properties will come with it
 
 
 // START WITH "X" player
@@ -29,138 +32,228 @@ let playerWinner = null
 // var for box state FORMAT
 // domObj.squarePlayed = true/false
 
-
 let turnCounter = 1
 
 
+//*********Create DOM objects W/ Game logic**************** */
 
-
-//*********************************************** */
-// set event listeners to the divs
 const tlbObj = document.getElementById('topLeftBox')
+
+tlbObj.squarePlayed = false // init squarePlayed to F to start
+
+    console.log("tlbObj.squarePlayed.outsd:"+tlbObj.squarePlayed)
+
+
+//********* */
 tlbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // TESTING give where it took place
 
     // mark box with X or O
-    insertXO(whosTurn,tlbObj)
+    insertXO(whosTurn,tlbObj) 
 
-    // check if this square is filled
 
     // check for win state
-
-    markBoxAsPlayed(tlbObj)
-    playerChanger()
+    
+    tlbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
     turnCounter++
 })
 
+//***
+
 const tmbObj = document.getElementById('topMiddleBox')
+tmbObj.squarePlayed = false // init
+
 tmbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
+
 
     // mark box with X or O
-    insertXO(whosTurn,tmbObj)
-
-    // check if this square is filled
+    insertXO(whosTurn,tmbObj) 
 
     // check for win state
 
-    markBoxAsPlayed(tmbObj)
-    playerChanger()
+    // console.log("bxPlyd?:"+hasBoxBeenPlayed(tmbObj.squarePlayed))
+    
+    tmbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
     turnCounter++
-
     
 })
 
+
+//******
+
 const trbObj = document.getElementById('topRightBox')
+trbObj.squarePlayed = false // init
+
 trbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
-    console.log(event.target)  // give where it took place
+
+
+    // console.log("trbObj.squarePlayed.insid:"+trbObj.squarePlayed)
+
 
     // mark box with X or O
-    insertXO(whosTurn,trbObj)
+    insertXO(whosTurn,trbObj) 
 
-    // check if this square is filled
 
     // check for win state
 
-    markBoxAsPlayed(trbObj)
-    playerChanger()
+    // console.log("bxPlyd?:"+hasBoxBeenPlayed(trbObj.squarePlayed))
+    
+    trbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
     turnCounter++
+
 })
 
 const mlbObj = document.getElementById('middleLeftBox')
-mlbObj.addEventListener('click', function(event) {
-    console.log(event.target)  // give where it took place
+mlbObj.squarePlayed = false // init
 
-    markBoxAsPlayed(mlbObj)
+mlbObj.addEventListener('click', function(event) {
+
+
+
+    // console.log("mlbObj.squarePlayed.insid:"+trbObj.squarePlayed)
+
+
+    // mark box with X or O
+    insertXO(whosTurn,mlbObj) 
+
+
+    // check for win state
+
+    // console.log("bxPlyd?:"+hasBoxBeenPlayed(mlbObj.squarePlayed))
+    
+    mlbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
 })
 
 const mmbObj = document.getElementById('middleMiddleBox')
+mmbObj.squarePlayed = false // init
+
 mmbObj.addEventListener('click', function(event) {
     console.log(event.target)  // give where it took place
+
+
+    // mark box with X or O
+    insertXO(whosTurn,mmbObj) 
+
+
+    // check for win state
+    
+    mmbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
 
 })
 
 const mrbObj = document.getElementById('middleRightBox')
+mrbObj.squarePlayed = false // init
+
 mrbObj.addEventListener('click', function(event) {
     console.log(event.target)  // give where it took place
+
+
+    // mark box with X or O
+    insertXO(whosTurn,mrbObj) 
+
+
+    // check for win state
+    
+    mrbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
 
 })
 
 const blbObj = document.getElementById('BottomLeftBox')
+blbObj.squarePlayed = false // init
+
 blbObj.addEventListener('click', function(event) {
     console.log(event.target)  // give where it took place
+
+
+    // mark box with X or O
+    insertXO(whosTurn,blbObj) 
+
+
+    // check for win state
+    
+    blbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
 
 })
 
 const bmbObj = document.getElementById('BottomMiddleBox')
+bmbObj.squarePlayed = false // init
+
 bmbObj.addEventListener('click', function(event) {
     console.log(event.target)  // give where it took place
+
+
+    // mark box with X or O
+    insertXO(whosTurn,bmbObj) 
+
+
+    // check for win state
+    
+    bmbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
+
 
 })
 
 const brbObj = document.getElementById('BottomRightBox')
+brbObj.squarePlayed = false // init
+
 brbObj.addEventListener('click', function(event) {
     console.log(event.target)  // give where it took place
+
+
+    // mark box with X or O
+    insertXO(whosTurn,brbObj) 
+
+
+    // check for win state
+    
+    brbObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    turnCounter++
+
+
 
 })
 
 //****************************************************************** */
 
 // NOTE DONE!! function to restart game on load
+    // CAN'T you just force a page reset??
 const restartGame = () =>{
-    setAllBoxesToNotPlayed()
-    whosTurn = true
-    turnCounter = 1
+    location.reload()
+    // setAllBoxesToNotPlayed()
+    // whosTurn = true
+    // turnCounter = 1
     // remove all ticks
 }
     // zero out all relevant variables
         // whosTurn, state of clicks
             // https://www.w3schools.com/howto/howto_js_remove_class.asp
 
-// function to restart game after end
-    // see if its end by running checkEnd
-    // run restartgame func
-
-
-
-
-// //loop / function of whos turn its is check
-// //DON"T think i need this
-// //input:none output t/f
-// const checkTurn = () => {
-//     if (whosTurn === true) {
-//         return true
-//     } else {return false}
-// }
-
 
 // function to change turns
-const playerChanger = (whosTurn) => {
-    if (whosTurn === true){
-        whosTurn === false
+// INPUT: boolean , output:NA , but need to change whosTurn
+const playerChanger = (whoTurnVar) => {
+    if (whoTurnVar === true){
+        whosTurn = false
     } else {
-        whosTurn === true
+        whosTurn = true
     }
 }
 
@@ -171,21 +264,21 @@ const playerChanger = (whosTurn) => {
 const insertXO = (user,elementObj) => {
     
     // let addMarkObj = document.getElementById("topLeftBox") //need to pass in elemtn later
-    if (hasBoxBeenPlayed(user) === false){
+    // player1 = True and "X"
+    if (hasBoxBeenPlayed(elementObj) === false){  //box is not filled
         if (user === true){  // aka player 1
-            // player1 = True and "X"
-            // is block set - do function here
+        
             let img = document.createElement('img')
             img.src = "img/x.png"
             elementObj.appendChild(img) 
 
-        } else if (user === false){
+        } else if (hasBoxBeenPlayed(user) === false){ // aka player 2
             let img = document.createElement('img')
             img.src = "img/o_300x300px.png"
             elementObj.appendChild(img)  
         } else{}
 
-    } else {// don't set box
+    } else {// don't set box cos box is filled
       }      
     
 }
@@ -207,7 +300,7 @@ const markBoxAsNotPlayed = (elementObj) => {
     elementObj.squarePlayed = false
 }
 
-// sets the class for all the boxes as NOT played
+// sets the class for all the boxes to played for restart or otherwise
 const setAllBoxesToPlayed = () => {
     markBoxAsPlayed(tlbObj)
     markBoxAsPlayed(tmbObj)
@@ -220,6 +313,7 @@ const setAllBoxesToPlayed = () => {
     markBoxAsPlayed(brbObj)
 }
 
+// sets the class for all the boxes as NOT played for restart or otherwise
 const setAllBoxesToNotPlayed = () => {
     markBoxAsNotPlayed(tlbObj)
     markBoxAsNotPlayed(tmbObj)
@@ -232,12 +326,14 @@ const setAllBoxesToNotPlayed = () => {
     markBoxAsNotPlayed(brbObj)
 }
 
-// turn counter will HAVE To be a number
+
+
+// function to check if theres a tie
+// i think if the turn = 9 and no win, then a tie
 
 // method to check if theres a win
     // check if there are wins in rows
     // check what the rows are composed of
-
 const checkIfWin = () => {
 }
 
@@ -247,7 +343,7 @@ const endGameCheck = () => {
 }
 
 // function to check if box is alreay set
-
+// INPUT: DOMobj, OUTPUT: T/F
 const hasBoxBeenPlayed = (domObj) => {
     if (domObj.squarePlayed === true){
         return true
@@ -272,7 +368,6 @@ let restartButtonObj = document.getElementById('restartButton')
 restartButtonObj.addEventListener('click',function() {
     restartGame()
 })
-
 
 /////////////////////////////// BELOW ARE NOTE functions
 
@@ -304,7 +399,7 @@ const addColor = (event) => {
 
 
     // add my new square to my-palette
-myPalette.appendChild(newSquare)
+    myPalette.appendChild(newSquare)
 }
 
 
@@ -314,14 +409,15 @@ const testArray = [tlbObj,tmbObj,trbObj,mlbObj,mmbObj,mrbObj,blbObj,bmbObj,brbOb
 
 const divTestObj = document.getElementById('testButton')  // TESTING
 divTestObj.addEventListener('click', function(event) {
-   console.log("square played:"+testArray[0].squarePlayed)
-   console.log("square played:"+testArray[1].squarePlayed)
-   console.log("square played:"+testArray[2].squarePlayed)
-   console.log("square played:"+testArray[3].squarePlayed)
-   console.log("square played:"+testArray[4].squarePlayed)
-   console.log("square played:"+testArray[5].squarePlayed)
-   console.log("square played:"+testArray[6].squarePlayed)
-   console.log("square played:"+testArray[7].squarePlayed)
+   console.log("tl.square played:"+testArray[0].squarePlayed)
+   console.log("tm.square played:"+testArray[1].squarePlayed)
+   console.log("tr.square played:"+testArray[2].squarePlayed)
+   console.log("ml.square played:"+testArray[3].squarePlayed)
+   console.log("mm.square played:"+testArray[4].squarePlayed)
+   console.log("mr.square played:"+testArray[5].squarePlayed)
+   console.log("bl.square played:"+testArray[6].squarePlayed)
+   console.log("bm.square played:"+testArray[7].squarePlayed)
+   console.log("br.square played:"+testArray[7].squarePlayed)
 
     console.log("whosTurn:"+ whosTurn)
     console.log("turnCounter:"+turnCounter)
