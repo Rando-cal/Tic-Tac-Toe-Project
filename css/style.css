@@ -12,22 +12,24 @@ h1 {
   left: 43%;
 }
 
-h5 {
+h2 {
   justify-content: center;
   font-family: 'Poiret One', cursive;
   font-family: 'Poppins', sans-serif;
   position:relative;
+  left: 60%;
   left: 500px;
+  color: black;
 }
 
-#playerDisplay {
+/* #playerDisplay {
   justify-content: center;
   font-family: 'Poiret One', cursive;
   font-family: 'Poppins', sans-serif;
   position:relative;
-  left: 45%;
+  left: 55%;
 
-}
+} */
 
 /* other box style */
 /* .box{
@@ -44,12 +46,13 @@ h5 {
 
 #canvas {
   height: 90vh;
-  margin: 5%;
+  margin: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  background-color: white;
-  border-color: black;
+  background-color: black;
+  border-color: white;
+
   
 }
 
@@ -58,9 +61,7 @@ h5 {
   font-size: 3rem;
   text-align: center;
   padding: 4rem;
-  border: 1px solid black
-  ;
-
+  border: 1px solid white;
 }
 
 #restartButton {
@@ -80,40 +81,3 @@ h5 {
   font-size:xx-large;
   font-weight: 900;
 }
-
-/********************OTHER STYLES*/
-
-/* remove border for edges */
-/* .cell:nth-child(1), .cell:nth-child(2), .cell:nth-child(3) {
-	border-top: none;
-}
-
-.cell:nth-child(1), .cell:nth-child(4), .cell:nth-child(7) {
-	border-left: none;
-}
-
-.cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
-	border-right: none;
-}
-
-.cell:nth-child(7), .cell:nth-child(8), .cell:nth-child(9) {
-	border-bottom: none;
-}
-
-
-body {
-	margin: 0;
-} */
-
-
-/* other styles */
-/* #canvas {
-	width: 100vw;
-	height: 100vh;
-	display: grid;
-	justify-content: center;
-	align-content: center;
-	justify-items: center;
-	align-items: center;
-	grid-template-columns: repeat(3, auto)
-} */

@@ -5,10 +5,7 @@
 // remove player turn on win
 // fix bug
 // set doc font
-// remove outside borders
 // tie is busted
-// swap out images
-// make it white on black
 
 
 // GENERAL NOTES
@@ -33,6 +30,9 @@
 
 //**************************** DEFINE VARIABLES********************************************* */
 
+
+
+
 // var of whos turn. True equals player1,X ; false = player2,"O". Set to player1 by default
 let whosTurn = true
 
@@ -45,211 +45,77 @@ let playerWinner = null
 
 let turnCounter = 1
 
-const playerDisplay = document.getElementById('playerDisplay')  //init playerDislay DOM object
-playerDisplay.innerText = "It is Player 1's turn (X)"
-
-const winnerDisplay = document.getElementById('winnerMessage')
-
+  //init playerDislay DOM object
+const displayBox = document.getElementById('displayBox')
+displayBox.innerText = "It is Player 1's turn (X)"
+// const winnerDisplay = document.getElementById('winnerMessage')
 
 
 // General NOTE: domObj.squarePlayed = true/false, which is NOT the type of mark
 
 
 
+
+
+// ***************************************************************
 //*********Create DOM objects W/ Game logic**************** */
 
-const tlbObj = document.getElementById('topLeftBox')
+const mainBoxExecutions = (domObj) => {
+    // mark box with X or O
+    insertXO(whosTurn,domObj)     
+    domObj.squarePlayed = true // set it to true when clicked
+    playerChanger(whosTurn)
+    checkIfWin()
+    checkForTie()  
+    turnCounter++
+}
 
+
+// init DOM objects
+const tlbObj = document.getElementById('topLeftBox')
+const tmbObj = document.getElementById('topMiddleBox')
+const trbObj = document.getElementById('topRightBox')
+const mlbObj = document.getElementById('middleLeftBox')
+const mmbObj = document.getElementById('middleMiddleBox')
+const mrbObj = document.getElementById('middleRightBox')
+const blbObj = document.getElementById('BottomLeftBox')
+const bmbObj = document.getElementById('BottomMiddleBox')
+const brbObj = document.getElementById('BottomRightBox')
+
+const domObjList = [tlbObj,tmbObj,trbObj,mlbObj,mmbObj,mrbObj,blbObj,bmbObj,brbObj]
+console.log(tlbObj===domObjList[0])
 // init var squarePlayed. Hold if a box has been played. Set to FALSE for start
 tlbObj.squarePlayed = false 
 
+// init DOM object event listeners
+// for (let i = 0; i < domObjList.length; i++) {  // trying to use a FOR loop instead
+//     domObjList[i].addEventListener('click',function() {mainBoxExecutions(i)})
+// }
+tlbObj.addEventListener('click', function() {mainBoxExecutions(tlbObj)},{once:true})
+tmbObj.addEventListener('click', function() {mainBoxExecutions(tmbObj)},{once:true})
+trbObj.addEventListener('click', function() {mainBoxExecutions(trbObj)},{once:true})
+mlbObj.addEventListener('click', function() {mainBoxExecutions(mlbObj)},{once:true})
+mmbObj.addEventListener('click', function() {mainBoxExecutions(mmbObj)},{once:true})
+mrbObj.addEventListener('click', function() {mainBoxExecutions(mrbObj)},{once:true})
+blbObj.addEventListener('click', function() {mainBoxExecutions(blbObj)},{once:true})
+bmbObj.addEventListener('click', function() {mainBoxExecutions(bmbObj)},{once:true})
+brbObj.addEventListener('click', function() {mainBoxExecutions(brbObj)},{once:true})
 
-tlbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,tlbObj) 
-    
-    tlbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-    checkIfWin()
-    checkForTie()
-    
-
-    turnCounter++
-})
-
-
-//********
-
-const tmbObj = document.getElementById('topMiddleBox')
-tmbObj.squarePlayed = false // init
-
-tmbObj.addEventListener('click', function(event) {
-
-
-    // mark box with X or O
-    insertXO(whosTurn,tmbObj) 
- 
-    tmbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-    
-})
-
-
-//********
-
-const trbObj = document.getElementById('topRightBox')
-trbObj.squarePlayed = false // init
-
-trbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,trbObj) 
-
-    
-    trbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-})
-
-
-//********
-
-const mlbObj = document.getElementById('middleLeftBox')
-mlbObj.squarePlayed = false // init
-
-mlbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,mlbObj) 
-    
-    mlbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-})
-
-//********
-
-const mmbObj = document.getElementById('middleMiddleBox')
-mmbObj.squarePlayed = false // init
-
-mmbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,mmbObj) 
-    
-    mmbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-
-})
-
-//********
-
-const mrbObj = document.getElementById('middleRightBox')
-mrbObj.squarePlayed = false // init
-
-mrbObj.addEventListener('click', function(event) {
-
-
-    // mark box with X or O
-    insertXO(whosTurn,mrbObj) 
-  
-    mrbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-})
-
-//********
-
-const blbObj = document.getElementById('BottomLeftBox')
-blbObj.squarePlayed = false // init
-
-blbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,blbObj) 
-    
-    blbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-
-})
-
-//********
-
-const bmbObj = document.getElementById('BottomMiddleBox')
-bmbObj.squarePlayed = false // init
-
-bmbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,bmbObj) 
-   
-    bmbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-
-
-
-})
-
-//********
-
-const brbObj = document.getElementById('BottomRightBox')
-brbObj.squarePlayed = false // init
-
-brbObj.addEventListener('click', function(event) {
-
-    // mark box with X or O
-    insertXO(whosTurn,brbObj) 
-    
-    brbObj.squarePlayed = true // set it to true when clicked
-    playerChanger(whosTurn)
-
-    checkIfWin()
-    checkForTie()
-    turnCounter++
-})
 
 //****************DomObjects var inits */
 
 // init the mark types if X
-tmbObj.isMarkTypeX = undefined 
-trbObj.isMarkTypeX = undefined
-mlbObj.isMarkTypeX = undefined
-mmbObj.isMarkTypeX = undefined
-mrbObj.isMarkTypeX = undefined
-blbObj.isMarkTypeX = undefined
-bmbObj.isMarkTypeX = undefined
-brbObj.isMarkTypeX = undefined
+for (let i = 0; i < domObjList.length; i++) {  // trying to use a FOR loop instead
+    domObjList[i].isMarkTypeX = undefined 
+}
+// tmbObj.isMarkTypeX = undefined 
+// trbObj.isMarkTypeX = undefined
+// mlbObj.isMarkTypeX = undefined
+// mmbObj.isMarkTypeX = undefined
+// mrbObj.isMarkTypeX = undefined
+// blbObj.isMarkTypeX = undefined
+// bmbObj.isMarkTypeX = undefined
+// brbObj.isMarkTypeX = undefined
 
 
 
@@ -279,10 +145,12 @@ const playerChanger = (whoTurnVar) => {
         whosTurn = true
     }    
     
-    if (whosTurn === true){ 
-        playerDisplay.innerText = "It is Player 1's turn (X)"
-    } else {
-        playerDisplay.innerText = "It is Player 2's turn (O)"
+    if (gameOver === false){    
+        if (whosTurn === true){ 
+            displayBox.innerText = "It is Player 1's turn (X)"
+        } else {
+            displayBox.innerText = "It is Player 2's turn (O)"
+        }
     }
 }
 
@@ -298,13 +166,13 @@ const insertXO = (user,elementObj) => {
         if (user === true){  // aka player 1
             elementObj.isMarkTypeX = true
             let img = document.createElement('img')
-            img.src = "img/x.png"
+            img.src = "img/X_edited_50prct.png"
             elementObj.appendChild(img) 
 
         } else if (hasBoxBeenPlayed(user) === false){ // aka player 2
             elementObj.isMarkTypeX = false
             let img = document.createElement('img')
-            img.src = "img/o_300x300px.png"
+            img.src = "img/O_edited_50prct.png"
             elementObj.appendChild(img)  
         } else{}
 
@@ -332,6 +200,7 @@ const markBoxAsNotPlayed = (elementObj) => {
 
 // sets the class for all the boxes to played for restart or otherwise
 const setAllBoxesToPlayed = () => {
+
     markBoxAsPlayed(tlbObj)
     markBoxAsPlayed(tmbObj)
     markBoxAsPlayed(trbObj)
@@ -345,6 +214,7 @@ const setAllBoxesToPlayed = () => {
 
 // sets the class for all the boxes as NOT played for restart or otherwise
 const setAllBoxesToNotPlayed = () => {
+
     markBoxAsNotPlayed(tlbObj)
     markBoxAsNotPlayed(tmbObj)
     markBoxAsNotPlayed(trbObj)
@@ -361,8 +231,8 @@ const setAllBoxesToNotPlayed = () => {
 // function to check if theres a tie
 // i think if the turn = 9 and no win, then a tie
 const checkForTie = () => {
-    if (turnCounter === 9 && gameOver === true) {
-        winnerDisplay.innerText = "IT WAS A TIE!" 
+    if (turnCounter >= 9) {
+        displayBox.innerText = "IT WAS A TIE!" 
         setAllBoxesToPlayed()
         
     }
@@ -392,10 +262,12 @@ const checkIfWin = () => {
         tlbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
         trbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && blbObj.isMarkTypeX === true
 
-    ) { winnerDisplay.innerText = "Player 1 (X) IS WINNER!!!" 
+    ) { displayBox.innerText = "Player 1 (X) IS WINNER!!!" 
 
         setAllBoxesToPlayed()
-        removeTurnDisplay()
+
+        // removeTurnDisplay()
+
         gameOver = true
         }
 
@@ -418,10 +290,11 @@ const checkIfWin = () => {
         trbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && blbObj.isMarkTypeX === false
 
         
-    ) { winnerDisplay.innerText = "Player 2 (O) IS WINNER!!!" 
+    ) { displayBox.innerText = "Player 2 (O) IS WINNER!!!" 
 
         setAllBoxesToPlayed()
-        removeTurnDisplay()
+        // removeTurnDisplay()
+
         gameOver = true
         }
     
@@ -439,17 +312,17 @@ const hasBoxBeenPlayed = (domObj) => {
 // method to display the winner
 // set innertext of winnerMessage div
 // inputs needs true of false or none
-const displayWinner = (winner) => {
-    let displayWinner = document.getElementById('winnerMessage')
-    if (winner === true) {
-        displayWinner.innerText = "Player 1 is the Winner!"
-    } else if (winner === false) {
-        displayWinner.innerText = "Player 2 is the Winner!"
-    } else (displayWinner.innerText = "Game on!")
-}
+// const displayWinner = (winner) => {
+//     let displayWinner = document.getElementById('winnerMessage')
+//     if (winner === true) {
+//         displayWinner.innerText = "Player 1 is the Winner!"
+//     } else if (winner === false) {
+//         displayWinner.innerText = "Player 2 is the Winner!"
+//     } else (displayWinner.innerText = "Game on!")
+// }
 
 const removeTurnDisplay = () => {
-    playerDisplay.innerText = ""
+    displayBox.innerText = ""
 }
 
 
@@ -458,6 +331,21 @@ let restartButtonObj = document.getElementById('restartButton')
 restartButtonObj.addEventListener('click',function() {
     restartGame()
 })
+
+
+// NOT functional
+// const removeAllBoxEventListeners = () => {
+//     tlbObj.removeEventListener('click', mainBoxExecutions)
+
+//     tmbObj.removeEventListener("click")
+//     trbObj.removeEventListener("click")
+//     mlbObj.removeEventListener("click")
+//     mmbObj.removeEventListener("click")
+//     mrbObj.removeEventListener("click")
+//     blbObj.removeEventListener("click")
+//     bmbObj.removeEventListener("click")
+//     brbObj.removeEventListener("click")
+// }
 
 //********************************************* */
 // TESTING AREA
