@@ -1,14 +1,6 @@
 // RANDY D'ABBRACCIO 6.12.2022
 
-// TO DO:
-// remove photos - maybe not with refresh
-// remove player turn on win
-// fix bug
-// set doc font
-// tie is busted
-
-
-// GENERAL NOTES
+// GENERAL NOTES for me
     // you can store box data/state in object properties and
         // don't need to use class to store data. use object.content = whateverdata
     // set a boolean var to undefined if you need to clear it
@@ -18,20 +10,14 @@
             // run two functions on click with onclick
             // make an event listener onclick="canplaynow(topLeftBox)'anotherfunc()
 
-
+    // domObj.squarePlayed = true/false, which is NOT the type of mark
     // can set array after the fact
-    // you can pass in just an DOMobject and its properties will come with it
+    // you can pass in just an DOMobject to a function and its properties will come with it
 
     // ?? Should you use UNDEFINED as state holder???
     // ?? Do you leave in testing code and comment it out??
 
-
-// START WITH "X" player
-
 //**************************** DEFINE VARIABLES********************************************* */
-
-
-
 
 // var of whos turn. True equals player1,X ; false = player2,"O". Set to player1 by default
 let whosTurn = true
@@ -39,35 +25,30 @@ let whosTurn = true
 // var for end of game
 let gameOver = false
 
-// var for winner, True is player 1, False 2
-// can you set a variable to null?
-let playerWinner = null
-
 let turnCounter = 1
+
+const markType = ['x','o','dead']  //former VAR is isMarkTypeX = T/F
 
   //init playerDislay DOM object
 const displayBox = document.getElementById('displayBox')
 displayBox.innerText = "It is Player 1's turn (X)"
-// const winnerDisplay = document.getElementById('winnerMessage')
-
-
-// General NOTE: domObj.squarePlayed = true/false, which is NOT the type of mark
-
-
-
-
 
 // ***************************************************************
 //*********Create DOM objects W/ Game logic**************** */
 
+// MAIN EXECUTION PER BOX IF CLICKED
 const mainBoxExecutions = (domObj) => {
-    // mark box with X or O
-    insertXO(whosTurn,domObj)     
-    domObj.squarePlayed = true // set it to true when clicked
+    
+    insertXO(whosTurn,domObj)
+
+    if (domObj.squarePlayed === undefined) {
+        domObj.squarePlayed = true  // set to true when clicked
+    }
+    
     playerChanger(whosTurn)
     checkIfWin()
     checkForTie()  
-    turnCounter++
+    if (gameOver === false) {turnCounter++}
 }
 
 
@@ -83,9 +64,7 @@ const bmbObj = document.getElementById('BottomMiddleBox')
 const brbObj = document.getElementById('BottomRightBox')
 
 const domObjList = [tlbObj,tmbObj,trbObj,mlbObj,mmbObj,mrbObj,blbObj,bmbObj,brbObj]
-console.log(tlbObj===domObjList[0])
-// init var squarePlayed. Hold if a box has been played. Set to FALSE for start
-tlbObj.squarePlayed = false 
+
 
 // init DOM object event listeners
 // for (let i = 0; i < domObjList.length; i++) {  // trying to use a FOR loop instead
@@ -104,26 +83,16 @@ brbObj.addEventListener('click', function() {mainBoxExecutions(brbObj)},{once:tr
 
 //****************DomObjects var inits */
 
-// init the mark types if X
+// init the mark types if X AND squaredPlayed to FALSE
 for (let i = 0; i < domObjList.length; i++) {  // trying to use a FOR loop instead
-    domObjList[i].isMarkTypeX = undefined 
+    domObjList[i].MarkType = undefined
+    domObjList[i].squarePlayed = false
 }
-// tmbObj.isMarkTypeX = undefined 
-// trbObj.isMarkTypeX = undefined
-// mlbObj.isMarkTypeX = undefined
-// mmbObj.isMarkTypeX = undefined
-// mrbObj.isMarkTypeX = undefined
-// blbObj.isMarkTypeX = undefined
-// bmbObj.isMarkTypeX = undefined
-// brbObj.isMarkTypeX = undefined
-
-
 
 //****************************************************************** */
 
 
-// NOTE DONE!! function to restart game on load
-    // CAN'T you just force a page reset??
+// NOT DONE!! function to restart game on load
 const restartGame = () =>{
     location.reload()
     // setAllBoxesToNotPlayed()
@@ -164,14 +133,16 @@ const insertXO = (user,elementObj) => {
     // player1 = True and "X"
     if (hasBoxBeenPlayed(elementObj) === false){  //box is not filled
         if (user === true){  // aka player 1
-            elementObj.isMarkTypeX = true
+            elementObj.MarkType = markType[0]
             let img = document.createElement('img')
+            img.className = "markImg"
             img.src = "img/X_edited_50prct.png"
             elementObj.appendChild(img) 
 
         } else if (hasBoxBeenPlayed(user) === false){ // aka player 2
-            elementObj.isMarkTypeX = false
+            elementObj.MarkType = markType[1]
             let img = document.createElement('img')
+            img.className = "markImg"
             img.src = "img/O_edited_50prct.png"
             elementObj.appendChild(img)  
         } else{}
@@ -184,18 +155,20 @@ const insertXO = (user,elementObj) => {
 // INPUT: element to remove
 const removeImageFromSquare = () => {
     let grabImage = document.getElementById('image_X')
-    grabImage.parentNode.removeChild(image_x) // NOT FUNCT YET
+    grabImage.parentNode.removeChild(image_x) // NOT FUNCTIONING YET
 }
 
 // function to mark div as filled
 // INPUT:element OUTPUT: nothing
 const markBoxAsPlayed = (elementObj) => {
     elementObj.squarePlayed = true
+    elementObj.MarkType = "dead"
 }
 
 // removes class of element fullbox
 const markBoxAsNotPlayed = (elementObj) => {
     elementObj.squarePlayed = false
+    elementObj.MarkType = undefined
 }
 
 // sets the class for all the boxes to played for restart or otherwise
@@ -231,10 +204,9 @@ const setAllBoxesToNotPlayed = () => {
 // function to check if theres a tie
 // i think if the turn = 9 and no win, then a tie
 const checkForTie = () => {
-    if (turnCounter >= 9) {
+    if (turnCounter >= 9 && gameOver === false) {
         displayBox.innerText = "IT WAS A TIE!" 
-        setAllBoxesToPlayed()
-        
+        setAllBoxesToPlayed()        
     }
 }
 
@@ -249,18 +221,18 @@ const checkIfWin = () => {
 
         // For X Win states
         // row wins
-        tlbObj.isMarkTypeX === true && tmbObj.isMarkTypeX === true && trbObj.isMarkTypeX === true ||
-        mlbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && mrbObj.isMarkTypeX === true ||
-        blbObj.isMarkTypeX === true && bmbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
+        tlbObj.MarkType === markType[0] && tmbObj.MarkType === markType[0] && trbObj.MarkType === markType[0] ||
+        mlbObj.MarkType === markType[0] && mmbObj.MarkType === markType[0] && mrbObj.MarkType === markType[0] ||
+        blbObj.MarkType === markType[0] && bmbObj.MarkType === markType[0] && brbObj.MarkType === markType[0] ||
 
         // column wins
-        tlbObj.isMarkTypeX === true && mlbObj.isMarkTypeX === true && blbObj.isMarkTypeX === true ||
-        tmbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && bmbObj.isMarkTypeX === true ||
-        trbObj.isMarkTypeX === true && mrbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
+        tlbObj.MarkType === markType[0] && mlbObj.MarkType === markType[0] && blbObj.MarkType === markType[0] ||
+        tmbObj.MarkType === markType[0] && mmbObj.MarkType === markType[0] && bmbObj.MarkType === markType[0] ||
+        trbObj.MarkType === markType[0] && mrbObj.MarkType === markType[0] && brbObj.MarkType === markType[0] ||
         
         // x wins
-        tlbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && brbObj.isMarkTypeX === true ||
-        trbObj.isMarkTypeX === true && mmbObj.isMarkTypeX === true && blbObj.isMarkTypeX === true
+        tlbObj.MarkType === markType[0] && mmbObj.MarkType === markType[0] && brbObj.MarkType === markType[0] ||
+        trbObj.MarkType === markType[0] && mmbObj.MarkType === markType[0] && blbObj.MarkType === markType[0]
 
     ) { displayBox.innerText = "Player 1 (X) IS WINNER!!!" 
 
@@ -276,18 +248,18 @@ const checkIfWin = () => {
 
         // For Y Win states
         // row wins
-        tlbObj.isMarkTypeX === false && tmbObj.isMarkTypeX === false && trbObj.isMarkTypeX === false ||
-        mlbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && mrbObj.isMarkTypeX === false ||
-        blbObj.isMarkTypeX === false && bmbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
+        tlbObj.MarkType === markType[1] && tmbObj.MarkType === markType[1] && trbObj.MarkType === markType[1] ||
+        mlbObj.MarkType === markType[1] && mmbObj.MarkType === markType[1] && mrbObj.MarkType === markType[1] ||
+        blbObj.MarkType === markType[1] && bmbObj.MarkType === markType[1] && brbObj.MarkType === markType[1] ||
 
         // column wins
-        tlbObj.isMarkTypeX === false && mlbObj.isMarkTypeX === false && blbObj.isMarkTypeX === false ||
-        tmbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && bmbObj.isMarkTypeX === false ||
-        trbObj.isMarkTypeX === false && mrbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
+        tlbObj.MarkType === markType[1] && mlbObj.MarkType === markType[1] && blbObj.MarkType === markType[1] ||
+        tmbObj.MarkType === markType[1] && mmbObj.MarkType === markType[1] && bmbObj.MarkType === markType[1] ||
+        trbObj.MarkType === markType[1] && mrbObj.MarkType === markType[1] && brbObj.MarkType === markType[1] ||
         
         // x wins
-        tlbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && brbObj.isMarkTypeX === false ||
-        trbObj.isMarkTypeX === false && mmbObj.isMarkTypeX === false && blbObj.isMarkTypeX === false
+        tlbObj.MarkType === markType[1] && mmbObj.MarkType === markType[1] && brbObj.MarkType === markType[1] ||
+        trbObj.MarkType === markType[1] && mmbObj.MarkType === markType[1] && blbObj.MarkType === markType[1]
 
         
     ) { displayBox.innerText = "Player 2 (O) IS WINNER!!!" 
@@ -308,19 +280,6 @@ const hasBoxBeenPlayed = (domObj) => {
         return true
     } else {return false}
 }
-
-// method to display the winner
-// set innertext of winnerMessage div
-// inputs needs true of false or none
-// const displayWinner = (winner) => {
-//     let displayWinner = document.getElementById('winnerMessage')
-//     if (winner === true) {
-//         displayWinner.innerText = "Player 1 is the Winner!"
-//     } else if (winner === false) {
-//         displayWinner.innerText = "Player 2 is the Winner!"
-//     } else (displayWinner.innerText = "Game on!")
-// }
-
 const removeTurnDisplay = () => {
     displayBox.innerText = ""
 }
@@ -365,15 +324,7 @@ const testArray = [tlbObj,tmbObj,trbObj,mlbObj,mmbObj,mrbObj,blbObj,bmbObj,brbOb
 //    console.log("bm.square played:"+testArray[7].squarePlayed)
 //    console.log("br.square played:"+testArray[7].squarePlayed)
 
-//    console.log("tl.isMarkTypeX:"+testArray[0].isMarkTypeX)
-//    console.log("tm.isMarkTypeX:"+testArray[1].isMarkTypeX)
-//    console.log("tr.isMarkTypeX:"+testArray[2].isMarkTypeX)
-//    console.log("ml.isMarkTypeX:"+testArray[3].isMarkTypeX)
-//    console.log("mm.isMarkTypeX:"+testArray[4].isMarkTypeX)
-//    console.log("mr.isMarkTypeX:"+testArray[5].isMarkTypeX)
-//    console.log("bl.isMarkTypeX:"+testArray[6].isMarkTypeX)
-//    console.log("bm.isMarkTypeX:"+testArray[7].isMarkTypeX)
-//    console.log("br.isMarkTypeX:"+testArray[7].isMarkTypeX)
+
 
 //     console.log()
 //     console.log("whosTurn:"+ whosTurn)

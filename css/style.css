@@ -1,72 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&family=Poppins:wght@500&display=swap')
 
-/* #testButton {
-  color: red;
-} */
-
-h1 {
-  color: red;
-  font-family: 'Poiret One', cursive;
-  font-family: 'Poppins', sans-serif;
-  position:relative;
-  left: 43%;
-}
 
 h2 {
+  text-align:center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: center;
-  font-family: 'Poiret One', cursive;
-  font-family: 'Poppins', sans-serif;
-  position:relative;
-  left: 60%;
-  left: 500px;
-  color: black;
+  align-content: center;
 }
 
-/* #playerDisplay {
-  justify-content: center;
+#displayBox {
   font-family: 'Poiret One', cursive;
   font-family: 'Poppins', sans-serif;
-  position:relative;
-  left: 55%;
-
-} */
-
-/* other box style */
-/* .box{
-  display: flex;
-  justify-content: center;
   position: relative;
-  width: 100px;
-  height: 100px;
-  align-items: center;  
-  border: 1px solid black;
+  display: grid;
+  justify-content: center;
+  align-content: center;
 
-}  */
 
+}
 
 #canvas {
-  height: 90vh;
+  /* height: 90vh; */
+  height: 1000px;
+  width: 900px;
   margin: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   background-color: black;
   border-color: white;
+  align-content: center;
+}
 
-  
+.markImg {
+  padding-top: 20%;
 }
 
 .box {
   color: white;
   font-size: 3rem;
   text-align: center;
-  padding: 4rem;
+  /* padding: 4rem; */
+  padding: 10px;
   border: 1px solid white;
+
+
 }
 
 #restartButton {
   color: black;
-  padding: 15px 32px;
+  padding: 5px 20px;
   text-align: center;
   display: inline-block;
   font-size: 20px;
@@ -81,3 +65,7 @@ h2 {
   font-size:xx-large;
   font-weight: 900;
 }
+
+/* #testButton {
+  color: red;
+} */
