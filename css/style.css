@@ -16,6 +16,11 @@ h2 {
   display: grid;
   justify-content: center;
   align-content: center;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 
 
 }
@@ -64,6 +69,11 @@ h2 {
   font-family: 'Poppins', sans-serif;
   font-size:xx-large;
   font-weight: 900;
+}
+
+#restartButton:hover {
+  background-color: black;
+  color: white;
 }
 
 /* #testButton {
